@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Blogging</title>
+
+    <!-- Custom fonts for this template-->
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css"/>
+<!--    <link th:href="@{/https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i}" rel="stylesheet"/>-->
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet"/>
+
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script th:src="@{/js/sb-admin-2.js}"></script>
+
+    <script>
+        $(document).on('shown.bs.modal', function (e) {
+            const postId = e.relatedTarget.dataset['post_id'];
+            $("#commentModal form").attr('action', '/comment/' + postId);
+
+            const nickName = $('#postNickName_' + postId).val();
+            $('#modalHeader').text(nickName);
+        });
+    </script>
+
+    <script>
+        $('.file-upload').file_upload();
+    </script>
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-light sidebar sidebar-dark accordion" id="accordionSidebar" >
+
+        <div class="sticky-top">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" th:href="@{/message}">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fa fa-spinner fa-info" style="color:grey;" aria-hidden="true"></i>
+                </div>
+                <div class="sidebar-brand-text text-info mx-3">Social Blogger</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/message}">
+                    <i class="fa fa-home" style="color:grey;" aria-hidden="true"></i>
+                    <span style="color:grey">HOME</span></a>
+            </li>
+
+
+
+
+
+            <!-- User Information -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProfile" aria-expanded="true" aria-controls="collapseProfile">
+                    <i class="fas fa-user a-sm fa-fw" style="color:grey;"></i>
+<!--                    <img class="img-profile rounded-circle" th:src="@{/img/avatar.png}">-->
+                    <span style="color:grey">Profile</span>
+
+                </a>
+                <!-- Dropdown - User Information -->
+                <div id="collapseProfile" class="collapse" aria-labelledby="userCollapse">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="#">
+                            <i class="fas fa-user a-sm fa-fw mr-2 text-gray-400"></i>
+                            Profile
+                        </a>
+
+                        <div class="dropdown-divider"></div>
+                        <a class="collapse-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </li>
+
+
+
+            <!-- Nav Item - Settings Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-cog " style="color:grey;"></i>
+                    <span style="color:grey;">Settings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="modal" data-target="#messageModal" aria-haspopup="true" aria-expanded="false" data-whatever="#">
+                    <i class="m-0 fa fa-paint-brush fa-lg" style="color:skyblue;">+</i>
+                </a>
+            </li>
+
+        </div>
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Search -->
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-info" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+
+                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                    <li class="nav-item dropdown no-arrow d-sm-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                            <form class="form-inline mr-auto w-100 navbar-search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-info" type="button">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+
+
+                    <!-- Nav Item - Messages -->
+                    <li class="nav-item dropdown no-arrow mx-2">
+                        <a class="nav-link dropdown-toggle" href="" id="messagesDropdownn" role="button" data-toggle="modal" data-target="#messageModal" aria-haspopup="true" aria-expanded="false" data-whatever="#">
+                            <i class="fa fa-paint-brush">+</i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+
+            <div class="container">
+
+                <div class="row">
+
+
+                    <!-- Approach -->
+
+                    <div class="col-lg-9 md-4">
+
+
+                        <div class="row ">
+                            <input th:id="${'postNickName_' + post.id}" type="hidden" th:value="'Replying to @'+${post.user.accountNickName}">
+                            <div class="col-2">
+                                <div class="text-center">
+                                    <img class="float-right rounded-circle" src="http://placehold.it/64x64"/>
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div class="d-flex d-sm-row">
+                                    <span class="nickname" style="margin-right: 0.5em;" th:text="${post.user.accountName}">nick<br></span>
+
+                                    <p class="text-primary" style="margin-right: 1em;" th:text="'@'+${post.user.accountNickName}"> </p>
+                                    <p class="text-secondary" style="margin-right: 0.5em;" >|</p>
+                                    <!--                                        <p class="text-secondary" style="margin-right: 0.5em;" th:text="${post.dataCreation}"> </p>-->
+                                    <p class="text-secondary" style="margin-right: 0.5em;" th:text="${{post.dataCreation}}"> </p>
+
+
+
+                                </div>
+                                <div class="d-flex d-sm-row">
+
+                                    <p class="text-left text-dark"
+                                       th:text="${post.message}" >
+                                    </p>
+                                </div>
+                                <div class="d-flex d-sm-row">
+
+                                    <img th:src="@{/img/undraw_posting_photo.svg}" class="img-fluid" alt="Responsive image" />
+                                </div>
+
+                                <!--                                    <hr class="m-2 driver">-->
+
+                                <div class="d-flex d-row justify-content-around">
+
+                                    <a class="btn btn-outline-info btn-rounded" data-toggle="modal" data-target="#commentModal" th:attr="data-post_id=${post.id}" >
+                                        <i class="far fa-comment text-info"></i>
+                                    </a>
+                                    <form method="post" th:action="@{/likee/{postId}(postId=${post.id})}">
+                                        <button type="submit" class="btn btn-outline-info btn-rounded" aria-pressed="false" >
+                                            <div th:if="${post.numberOfLikes} == 0">
+                                                <span class="far fa-heart text-danger" ></span>
+                                            </div>
+                                            <div th:unless="${post.numberOfLikes} == 0">
+                                                <span class="far fa-heart text-danger" th:text="${post.numberOfLikes}"></span>
+                                            </div>
+                                        </button>
+                                    </form>
+                                    <button type="button" class="btn btn-outline-info btn-rounded" aria-pressed="false">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <hr class="m-3 driver">
+
+                        <div th:each="comment : ${comments}">
+                            <div class="row ">
+                                <div class="col-2">
+                                    <div class="text-center">
+                                        <img class="float-right rounded-circle" src="http://placehold.it/64x64"/>
+                                    </div>
+                                </div>
+                                <div class="col-10">
+                                    <div class="d-flex d-sm-row">
+                                        <strong class="text-dark" style="margin-right: 0.5em;" th:text="${comment.user.accountName}">nick<br></strong>
+                                        <p class="text-primary" style="margin-right: 1em;" th:text="'@'+${comment.user.accountNickName}"> </p>
+                                        <p class="text-secondary" style="margin-right: 0.5em;" >|</p>
+
+                                        <p class="text-secondary" style="margin-right: 0.5em;" th:text="${{comment.dataCreation}}"> </p> <hr>
+                                        <p class="text-secondary" style="margin-right: 0.3em;" th:text="'Replying to'"/>
+                                        <p class="text-primary" th:text="'@'+${post.user.accountNickName}"> </p>
+                                    </div>
+                                    <div class="d-flex d-sm-row">
+
+                                        <p class="text-left text-dark"
+                                           th:text="${comment.comment}" >
+                                        </p>
+                                    </div>
+                                    <div class="d-flex d-sm-row">
+                                        <!--                                   to do???????????? img-->
+                                    </div>
+                                    <!--                                <div class="d-flex d-row justify-content-around">-->
+                                    <!--                                    <button type="button" class="btn btn-outline-secondary" >-->
+                                    <!--                                        <i class="far fa-comment"></i>-->
+                                    <!--                                    </button>-->
+                                    <!--                                    <button type="button" class="btn btn-outline-secondary">-->
+                                    <!--                                        <i class="far fa-heart"></i>-->
+                                    <!--                                    </button>-->
+                                    <!--                                    <button type="button" class="btn btn-outline-secondary">-->
+                                    <!--                                        <i class="fas fa-arrow-right"></i>-->
+                                    <!--                                    </button>-->
+                                    <!--                                </div>-->
+
+                                </div>
+                            </div>
+                            <hr class="m-3 driver">
+                        </div>
+
+
+                    </div>
+
+
+                    <!--    Contacts    -->
+                    <div class=" d-none d-lg-block col-lg-3">
+                        <div class="sticky-top">
+
+
+
+<!--                            <div class="card shadow">-->
+<!--                                <div class="card-header ">-->
+<!--                                    <h6 class="m-0 font-weight-bold text-info">Popular relationships</h6>-->
+<!--                                </div>-->
+<!--                                <div class="card-body" th:each="user : ${users}">-->
+<!--                                    <p class="mb-0 d-flex justify-content-around" th:text="'@'+${user.userName}">-->
+<!--                                    <div th:if="${user.followed}">-->
+<!--                                        <form method="post" th:action="@{/unfollow/{userId}(userId=${user.id})}">-->
+<!--                                            <button type="submit" class="btn btn-outline-info btn-rounded" aria-pressed="false" >-->
+<!--                                                UnFollow-->
+<!--                                            </button>-->
+<!--                                        </form>-->
+<!--                                    </div>-->
+<!--                                    <div th:unless="${user.followed}">-->
+<!--                                        <form method="post" th:action="@{/follow/{userId}(userId=${user.id})}">-->
+<!--                                            <button type="submit" class="btn btn-outline-info btn-rounded" aria-pressed="false" >-->
+<!--                                                Follow-->
+<!--                                            </button>-->
+<!--                                        </form>-->
+<!--                                    </div>-->
+<!--                                </p>-->
+<!--                                    &lt;!&ndash;                                     <button type="button" class="btn btn-outline-info btn-sm">Follow </button>&ndash;&gt;-->
+<!--                                    <hr class="divider">-->
+<!--                                    </div>-->
+<!--                                 </div>-->
+
+
+
+
+                            <hr class="m-2">
+
+                            <div class="card shadow">
+                                <div class="card-header ">
+                                    <h6 class="m-0 font-weight-bold text-info">Trends</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p>#Education</p>
+                                    <hr class="divider">
+                                    <p class="mb-0">#Biznes</p>
+                                    <hr class="divider">
+                                    <p class="mb-0">#Politics</p>
+                                </div>
+                            </div>
+
+                            <!--  End of Contacts Contents-->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.container -->
+
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container">
+                <div class="copyright text-center my-auto">
+                    <span>Blogger Group</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login">Logout</a>
+                <form class="m-0" th:action="@{/perform_logout}" method="post">
+                    <input class="btn btn-dark" type="submit" value="Logout">Logout</input>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="newMessageModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newMessageModal">What's new ?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+               <form th:action="@{/message}" th:object="${newMessage}" method="post">
+            <div class="modal-body">
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text" name="message"></textarea>
+
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="input-file-now" class="file-upload" />
+                        </div>
+
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" >Add Post</button>
+            </div>
+               </form>
+        </div>
+    </div>
+</div>
+
+
+<!--    SECOND MODAL- COMMENT-->
+<div id="commentModal" class="modal fade" th:id="commentModal" tabindex="-1" role="dialog" aria-labelledby="newCommentModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="modalHeader" ></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form th:action="@{/comment/}" method="post">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="comment-text" class="col-form-label">Comment:</label>
+                        <textarea class="form-control" id="comment-text" name="comment"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Reply</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
