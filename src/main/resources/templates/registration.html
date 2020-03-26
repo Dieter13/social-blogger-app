@@ -69,15 +69,16 @@
                 <div class="form-group row">
 
                   <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input th:field="*{password}" type="password" class="form-control form-control-user"
-                           id="exampleInputPassword" placeholder="Password">
+                    <input th:field="*{password}" type="password" onkeyup='check()' class="form-control form-control-user"
+                           name="password" id="password" placeholder="Password">
                     <p th:each="error : ${#fields.errors('password')}"
                        th:text="${error}">Validation error</p>
                   </div>
 
                   <div class="col-sm-6">
-                    <input th:field="*{matchingPassword}" type="password" class="form-control form-control-user"
-                              id="exampleRepeatPassword" placeholder="Repeat Password">
+                    <input th:field="*{matchingPassword}" type="password" onkeyup='check()' class="form-control form-control-user"
+                           name="confirm_password"   id="confirm_password" placeholder="Repeat Password">
+                    <span id='message'></span>
                     <p th:each="error : ${#fields.errors('matchingPassword')}"
                        th:text="${error}">Validation error</p>
                   </div>
@@ -113,6 +114,21 @@
   <script type="text/javascript" th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
   <!-- Custom scripts for all pages-->
   <script type="text/javascript" th:src="@{/js/sb-admin-2.min.js}"></script>
+
+
+  <script>
+    var check = function() {
+      if (document.getElementById('password').value ==
+              document.getElementById('confirm_password').value) {
+        document.getElementById('message').style.color = 'green';
+        document.getElementById('message').innerHTML = 'matching';
+      } else {
+        document.getElementById('message').style.color = 'red';
+        document.getElementById('message').innerHTML = 'not matching';
+      }
+    }
+  </script>
+
 </body>
 
 </html>
