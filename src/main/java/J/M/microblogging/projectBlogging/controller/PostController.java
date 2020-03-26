@@ -22,10 +22,10 @@ import java.util.List;
 @Controller
 public class PostController{
 
-    private IPostService postService ;
-    private ICommentService commentService;
-    private ILikeService likeService;
-    private UserService userService;
+    private final IPostService postService ;
+    private final ICommentService commentService;
+    private final ILikeService likeService;
+    private final UserService userService;
 
     public PostController(IPostService postService, ICommentService iCommentService, ILikeService iLikeService, UserService userService) {
         this.postService = postService;

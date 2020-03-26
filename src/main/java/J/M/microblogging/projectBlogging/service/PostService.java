@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 public class PostService implements IPostService{
 
 
-    private PostRepository postRepository;
-    private UserRepository userRepository;
-    private IUserService userService;
+    private final PostRepository postRepository;
+    private final UserRepository userRepository;
+    private final IUserService userService;
 
 
     public PostService(PostRepository postRepository, UserRepository userRepository, IUserService userService) {

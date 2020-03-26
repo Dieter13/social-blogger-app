@@ -10,9 +10,11 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
     private Pattern pattern;
     private Matcher matcher;
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+
     @Override
     public void initialize(ValidEmail constraintAnnotation) {
     }
+
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context){
         return (validateEmail(email));

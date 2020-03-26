@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class LikeService implements ILikeService {
 
-    private LikeRepository likeRepository;
-    private UserRepository userRepository;
-    private PostRepository postRepository;
+    private final LikeRepository likeRepository;
+    private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
     public LikeService(LikeRepository likeRepository, UserRepository userRepository, PostRepository postRepository) {
         this.likeRepository = likeRepository;

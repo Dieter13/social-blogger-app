@@ -10,9 +10,13 @@ import java.util.List;
 
 @Service
 public interface IPostService  {
+
     Post registerNewPost(PostDto postDto);
+
     PostDto getPostById(Long postId);
+
     List<PostDto> findAllPosts();
+
     List<PostDto> findAllPostsOfLoggedUser(Long id);
 
 }

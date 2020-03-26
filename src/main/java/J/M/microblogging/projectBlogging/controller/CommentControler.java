@@ -17,7 +17,7 @@ import java.util.List;
 @Controller
 public class CommentControler {
 
-    private ICommentService iCommentService;
+    private final ICommentService iCommentService;
 
     public CommentControler(ICommentService iCommentService) {
         this.iCommentService = iCommentService;

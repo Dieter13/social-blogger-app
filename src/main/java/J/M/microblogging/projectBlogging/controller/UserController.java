@@ -15,9 +15,11 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    @Autowired
-    IUserService userService;
+    private final IUserService userService;
 
+    public UserController(IUserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
     public String showUser(Model model, @PathVariable Long id) {

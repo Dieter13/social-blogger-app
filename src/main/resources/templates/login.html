@@ -1,60 +1,98 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!-- include css in the header -->
-   <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
-
-
+	<title>Login V8</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link th:href="@{/images/icons/favicon.ico}" rel="icon" type="image/png"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/Login_v8/fonts/font-awesome-4.7.0/css/font-awesome.min.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/Login_v8/vendor/animate/animate.css}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" th:href="@{/Login_v8/vendor/css-hamburgers/hamburgers.min.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/Login_v8/vendor/animsition/css/animsition.min.css}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/Login_v8/vendor/select2/select2.min.css}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" th:href="@{/Login_v8/vendor/daterangepicker/daterangepicker.css}">
+<!--===============================================================================================-->
+	<link th:href="@{/css/util.css}" rel="stylesheet" type="text/css"/>
+	<link th:href="@{/css/main.css}" rel="stylesheet" type="text/css"/>
+<!--===============================================================================================-->
 </head>
 <body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178" action="/perform_login"  method="post">
+					<span class="login100-form-title">
+						Sign In
+					</span>
 
-<h2>Login Form</h2>
+					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
+						<input class="input100" type="text" name="user_name" placeholder="Username">
+						<span class="focus-input100"></span>
+					</div>
 
-<!--<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>-->
+					<div class="wrap-input100 validate-input" data-validate = "Please enter password">
+						<input class="input100" type="password" name="password" placeholder="Password">
+						<span class="focus-input100"></span>
+					</div>
 
+					<div class="text-right p-t-13 p-b-23">
+						<span class="txt1">
+							Forgot
+						</span>
 
-<div class="modal">
-    <form name = 'f' class="modal-content animate" action="/perform_login"  method="post">
-        <div class="imgcontainer">
-            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-            <img th:src="@{img/img_avatars.png}" alt="Avatar" class="avatar">
+						<a href="#" class="txt2">
+							Username / Password?
+						</a>
+					</div>
 
-        </div>
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" name="submit" type="submit" value="submit">
+							Sign in
+						</button>
+					</div>
 
-        <div class="container">
-            <label for="username"><b>Username</b></label>
-            <input id="username" type="text" placeholder="Enter Username" name="user_name"  required>
+					<div class="flex-col-c p-t-170 p-b-40">
+						<span class="txt1 p-b-9">
+							Don’t have an account?
+						</span>
 
-            <label for="password"><b>Password</b></label>
-            <input id="password" type="password"  placeholder="Enter Password" name="password" required>
-
-            <button name="submit" type="submit" value="submit" >Login</button>
-            <label>
-                <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
-        </div>
-
-        <div class="container" style="background-color:#f1f1f1">
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-            <span class="psw">Forgot <a href="#">password?</a></span>
-        </div>
-    </form>
-</div>
-
-<script>
-    // // Get the modal
-    // var modal = document.getElementById('id01');
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script>
+						<a th:href="@{/user/registration}" class="txt3">
+							Sign up now
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+<!--===============================================================================================-->
+	<script th:src="@{/Login_v8/vendor/jquery/jquery-3.2.1.min.js}"></script>
+<!--===============================================================================================-->
+	<script th:src="@{/Login_v8/vendor/animsition/js/animsition.min.js}"></script>
+<!--===============================================================================================-->
+	<script th:src="@{/Login_v8/vendor/bootstrap/js/popper.js}"></script>
+	<script th:src="@{/Login_v8/vendor/bootstrap/js/bootstrap.min.js}"></script>
+<!--===============================================================================================-->
+	<script th:src="@{/Login_v8/vendor/select2/select2.min.js}"></script>
+<!--===============================================================================================-->
+	<script th:src="@{/Login_v8/vendor/daterangepicker/moment.min.js}"></script>
+	<script th:src="@{/Login_v8/vendor/daterangepicker/daterangepicker.js}"></script>
+<!--===============================================================================================-->
+	<script th:src="@{/Login_v8/vendor/countdowntime/countdowntime.js}"></script>
+<!--===============================================================================================-->
+	<script th:src="@{/Login_v8/js/main.js}"></script>
 
 </body>
 </html>

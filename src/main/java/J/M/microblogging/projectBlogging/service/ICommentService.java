@@ -8,6 +8,7 @@ import java.util.List;
 public interface ICommentService {
 
     Comment registerNewComment(Long id, CommentDto commentDto);
+
     List<CommentDto> findAllCommentsFromPost(Long id);
 
 }

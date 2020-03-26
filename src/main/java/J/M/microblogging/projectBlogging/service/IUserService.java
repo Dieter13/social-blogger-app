@@ -12,11 +12,17 @@ import java.util.List;
 public interface IUserService {
 
     User registerNewUserAccount(LogInUserDto accountDto) throws EmailExistsException;
+
     User authenticateLoginUser(LogInUserDto loginDto);
+
     User addFollower(Long userId);
+
     User removeFollower(Long userId);
+
     List<UserDto> getAllUsers();
+
     UserDto getUserById(Long id);
+
     User currentUser();
 
 }

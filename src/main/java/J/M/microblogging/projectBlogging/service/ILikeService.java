@@ -6,6 +6,7 @@ import J.M.microblogging.projectBlogging.model.Like;
 public interface ILikeService {
 
     Like newLike(Long postId);
+
     Long countLikesForPost(Long id);
 
 }

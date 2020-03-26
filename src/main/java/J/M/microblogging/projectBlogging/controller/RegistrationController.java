@@ -22,15 +22,18 @@ import javax.validation.Valid;
 @Controller
 public class RegistrationController {
 
-    @Autowired
-    IUserService userService;
+    private final IUserService userService;
+
+    public RegistrationController(IUserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/user/registration", method = RequestMethod.GET)
     public String showRegistrationForm(Model model) {
         LogInUserDto logInUserDto = new LogInUserDto();
         model.addAttribute("user", logInUserDto);
 
-        return "registration";
+        return "registration2";
     }
 
     @RequestMapping(value = "/user/registration", method = RequestMethod.POST)
@@ -48,7 +51,7 @@ public class RegistrationController {
             result.rejectValue("email", "message.regError");
         }
         if (result.hasErrors()) {
-            return new ModelAndView("registration", "user", accountDto);
+            return new ModelAndView("registration2", "user", accountDto);
         }
         else {
             return new ModelAndView("login", "user", accountDto);
